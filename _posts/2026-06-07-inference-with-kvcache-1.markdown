@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[古法编程] GPT2 Inference With KV Cache / 推理中的 KV Cache - 原理篇"
+title:  "[古法编程] GPT2 Inference With KV Cache - Part1 / 推理中的 KV Cache - 原理篇"
 date:   2026-06-07 10:07:00 +0800
 categories: llm gpt2 kvcache
 ---
@@ -190,11 +190,11 @@ Attention Scores 的计算形状是 `[B, H, T, d_k] × [B, H, T, d_k]ᵀ → [B,
 
 把 attention 和 MLP 的残差连接合在一起看，整个 Decoder Layer 的输出 `[B, -1, d_model]` 最终只依赖前一个模块（上一层 Decoder，或者 Embedding 层）输出的 `[B, -1, d_model]`。
 
-### Token Embedding & Positional Embedding
+## 倒数第五步：Token Embedding & Positional Embedding
 
 这两个都是 Row-wise 操作，反向推导：它们的输出 `[B, -1, d_model]` 只依赖 forward 输入的最后一个 token 位置，即 `[B, -1]`（索引 **T−1** 处的 token id）。
 
-### Prefill & Decode
+## Prefill & Decode
 
 到这里，数据依赖的全貌已经清晰了。
 
