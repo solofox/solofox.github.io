@@ -1,0 +1,57 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- seo -%}
+  <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
+  {%- feed_meta -%}
+  {%- if jekyll.environment == 'production' and site.google_analytics -%}
+    {%- include google-analytics.html -%}
+  {%- endif -%}
+
+  <!-- MathJax 3 -->
+  <script>
+    // Workaround: GFM parses $d_model$ as $d<em>model</em>$,
+    // breaking LaTeX inside inline math. This restores the underscores
+    // inside $...$ and $$...$$ delimiters before MathJax runs.
+    function __fixMathUnderscores() {
+      var selectors = ['p', 'li', 'td', 'th', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'dd', 'dt'];
+      selectors.forEach(function (sel) {
+        document.querySelectorAll(sel).forEach(function (el) {
+          if (el.textContent.indexOf('$') === -1 && el.textContent.indexOf('(') === -1) return;
+          var html = el.innerHTML;
+          // display math first (non-greedy)
+          html = html.replace(/\$\$([\s\S]*?)\$\$/g, function (_m, inner) {
+            return '$$' + inner.replace(/<em>([^<]*)<\/em>/g, '_$1_') + '$$';
+          });
+          // inline math: $...$, avoid escaped \$
+          html = html.replace(/\$(?!\$)([^$]*?)\$(?!\$)/g, function (_m, inner) {
+            return '$' + inner.replace(/<em>([^<]*)<\/em>/g, '_$1_') + '$';
+          });
+          el.innerHTML = html;
+        });
+      });
+    }
+
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        tags: 'ams'
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'kbd']
+      },
+      startup: {
+        pageReady: function () {
+          __fixMathUnderscores();
+          return MathJax.startup.defaultPageReady();
+        }
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
