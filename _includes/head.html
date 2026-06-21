@@ -4,6 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {%- seo -%}
   <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
+  <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
   {%- feed_meta -%}
   {%- if jekyll.environment == 'production' and site.google_analytics -%}
     {%- include google-analytics.html -%}
@@ -55,3 +56,51 @@
   <script type="text/javascript" id="MathJax-script" async
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
+
+<!-- TOC sidebar: build outline from post headings, highlight on scroll -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var tocNav = document.querySelector('.toc');
+  if (!tocNav) return;
+  var content = document.querySelector('.post-content');
+  if (!content) return;
+
+  var headings = content.querySelectorAll('h1, h2, h3, h4');
+  if (headings.length === 0) {
+    var sidebar = document.querySelector('.toc-sidebar');
+    if (sidebar) sidebar.style.display = 'none';
+    return;
+  }
+
+  var ul = document.createElement('ul');
+  headings.forEach(function (h, i) {
+    if (!h.id) h.id = 'heading-' + i;
+    var li = document.createElement('li');
+    li.className = 'toc-' + h.tagName.toLowerCase();
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+  tocNav.appendChild(ul);
+
+  var links = tocNav.querySelectorAll('a');
+  function updateActive() {
+    var scrollY = window.scrollY + 80;
+    var current = null;
+    headings.forEach(function (h) {
+      if (h.offsetTop <= scrollY) current = h;
+    });
+    links.forEach(function (a) {
+      a.classList.toggle('active', current && a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', updateActive, { passive: true });
+  updateActive();
+});
+</script>

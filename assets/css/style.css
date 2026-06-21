@@ -1,0 +1,110 @@
+/* ======================================
+   TOC Sidebar — sticky outline on right
+   策略：把 .wrapper 加宽到 1100px，
+         正文限制在 780px，TOC 在右侧剩余空间
+   ====================================== */
+
+/* 扩宽页面内容区，为 TOC 腾出右侧位置 */
+.page-content > .wrapper {
+  max-width: 1100px;
+}
+
+.post-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.5rem;
+}
+
+.post-layout .post {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 780px;
+}
+
+/* ---------- TOC sidebar ---------- */
+.toc-sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 24px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.toc-container {
+  padding: 0.4rem 0;
+}
+
+.toc-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888;
+  margin: 0 0 0.5rem;
+  padding: 0 0.5rem;
+  font-weight: 600;
+}
+
+.toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.toc li {
+  margin: 0;
+  padding: 0;
+}
+
+/* 按 heading 层级缩进：h1 不缩进且加粗，h2 缩进一级，h3/h4 依次递进 */
+.toc li.toc-h1 { padding-left: 0; }
+.toc li.toc-h1 > a { font-weight: 600; color: #333; }
+.toc li.toc-h2 { padding-left: 0; }
+.toc li.toc-h3 { padding-left: 0.75rem; }
+.toc li.toc-h4 { padding-left: 1.5rem; }
+
+.toc a {
+  display: block;
+  padding: 0.15rem 0.5rem;
+  color: #666;
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.toc a:hover {
+  color: #2a7ae2;
+}
+
+.toc a.active {
+  color: #2a7ae2;
+  border-left-color: #2a7ae2;
+  font-weight: 500;
+}
+
+/* 窄屏：隐藏 TOC，正文占满 */
+@media (max-width: 1060px) {
+  .toc-sidebar {
+    display: none;
+  }
+  .page-content > .wrapper {
+    max-width: 800px;
+  }
+  .post-layout .post {
+    max-width: none;
+  }
+}
+
+/* TOC 滚动条 */
+.toc-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+.toc-sidebar::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 2px;
+}
