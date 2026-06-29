@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "[古法编程] GPT2 Inference from Scratch / 从头实现 GPT2 的推理"
+title:  "[模型推理] Inference From Scratch For GPT2 / 从头实现大模型的推理"
 date:   2026-06-01 20:28:00 +0800
-categories: torch llm gpt2
+categories: llm inference gpt2
 ---
 
 > 文章含 AI 量：< 5%。AI 主要负责润色。  

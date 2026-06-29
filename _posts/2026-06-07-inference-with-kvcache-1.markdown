@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "[古法编程] GPT2 Inference With KV Cache - Part1 / 推理中的 KV Cache - 原理篇"
+title:  "[模型推理] Inference From Scratch: KV Cache - Part1 / 推理中的 KV Cache - 原理篇"
 date:   2026-06-07 10:07:00 +0800
-categories: llm gpt2 kvcache
+categories: llm inference kvcache
 ---
 
 > 文章含 AI 量：< 10%。AI 主要负责润色，以及补充了 Prefill 和 Decode 的阐述。  
