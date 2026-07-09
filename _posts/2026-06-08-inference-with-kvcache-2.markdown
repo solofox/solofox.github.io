@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[模型推理] GPT2 Inference With KV Cache - Part2 / 推理中的 KV Cache - 实现篇"
+title:  "[模型推理] Inference From Scratch: KV Cache - Part2 / 推理中的 KV Cache - 实现篇"
 date:   2026-06-08 16:42:00 +0800
 categories: llm gpt2 kvcache
 ---
